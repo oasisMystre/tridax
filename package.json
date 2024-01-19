@@ -9,7 +9,13 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/node": "^20.11.5",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
+  },
+  "dependencies": {
+    "exif-parser": "^0.1.12",
+    "exiftool-vendored": "^24.4.0",
+    "fs": "0.0.1-security"
   }
 }
