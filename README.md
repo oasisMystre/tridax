@@ -33,9 +33,9 @@ file.addEventListener("save", function(transformation){
  }
 });
 
-file.registerFilter("crop", applyCropFilter);
-file.registerPosition("position", applyPosition);
-file.registerResize("resize", applyResize);
+file.registerPlugin("crop", applyCropFilter);
+file.registerPlugin("position", applyPosition);
+file.registerPlugin("resize", applyResize);
 
 async function getPreviewImage(){
  const tridax =  await file.open("image.trx");
@@ -93,8 +93,9 @@ async function open(fileName){
  const file = await trx.readFile();
  const layers = await trx.readLayers();
  const state = await trx.readState();
-
- applyTransformation(file, layers);
+ for(const layer of layers){
+   applyTransformation(file, layers);
+ }
  applyTransformation(file, state);
 
  return file;
@@ -104,11 +105,13 @@ async function open(fileName){
 
 #### Get filter history from layers
 
-check tridax file and loop through layers
+> check tridax file, loop through layers and check individual layer filter metadata.
 
 ```
 .revert("crop", depth=-1) /// a function call by editor
 ```
+
+> `Commits and ClI` revert is different from editor revert (This is basically undoing changes to previously applied changes from filter metadata in editor) While CLI revert simply revert the whole tridax file to previous snapshot from commit reference/hash.
 
 ### CLI 🚧🚧 built on git
 
